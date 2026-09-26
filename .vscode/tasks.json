@@ -1,0 +1,46 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "MP1: Run contract tests",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "unittest", "discover", "-s", "tests", "-v"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "group": { "kind": "test", "isDefault": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "MP1: Train smoke test (10 steps)",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["train.py", "--implementation", "model", "--steps", "10", "--run-dir", "runs/smoke-vscode"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "MP1: Train baseline (1200 steps)",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["train.py", "--implementation", "model", "--device", "cpu", "--threads", "4", "--seed", "17", "--run-dir", "runs/baseline-s17"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "MP1: Evaluate baseline validation",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["evaluate.py", "--checkpoint", "runs/baseline-s17/checkpoint.pt", "--device", "cpu", "--precision", "fp32", "--split", "validation"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "MP1: Evaluate baseline test",
+      "type": "process",
+      "command": "${workspaceFolder}\\.venv\\Scripts\\python.exe",
+      "args": ["evaluate.py", "--checkpoint", "runs/baseline-s17/checkpoint.pt", "--device", "cpu", "--precision", "fp32", "--split", "test"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "MP1: Debug student smoke training",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/train.py",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}",
+      "args": ["--implementation", "student", "--steps", "10", "--run-dir", "runs/student-debug"]
+    },
+    {
+      "name": "MP1: Debug contract tests",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "unittest",
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}",
+      "args": ["discover", "-s", "tests", "-v"]
+    }
+  ]
+}

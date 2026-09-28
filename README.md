@@ -74,21 +74,29 @@ targets fixed:
 python train.py --implementation student --config configs/swiglu_128.json --device cpu --precision fp32 --threads 4 --seed 17 --steps 1200 --batch-size 32 --run-dir runs/swiglu128-fair-s17
 ```
 
-The frozen final model uses width 192, six attention heads, four blocks and a
-SwiGLU hidden width of 512. It is trained and evaluated with:
+The earlier frozen model used width 192 and is retained in the log for
+provenance. The current candidate uses width 256, eight attention heads, six
+blocks, SwiGLU hidden width 688 and dropout 0.1. Training was accelerated on a
+local CUDA GPU, but the ranked result below was re-evaluated in the required
+CPU FP32 mode:
+
+The previous 192-wide run can still be reproduced with the commands recorded
+in `report/RUN_LOG.csv`; it is retained as an intermediate comparison.
 
 ```bash
-python train.py --implementation student --config configs/swiglu_192.json --device cpu --precision fp32 --threads 4 --seed 17 --steps 3600 --batch-size 32 --run-dir runs/swiglu192-final3600-s17
-python evaluate.py --checkpoint runs/swiglu192-final3600-s17/checkpoint.pt --device cpu --precision fp32 --threads 4 --split test
+python train.py --implementation student --config configs/swiglu_256x6_dropout.json --device cuda --precision fp32 --threads 4 --seed 17 --steps 12000 --batch-size 32 --eval-every 2000 --run-dir runs/swiglu256x6-dropout10-final12000-s17
+python evaluate.py --checkpoint runs/swiglu256x6-dropout10-final12000-s17/checkpoint.pt --device cpu --precision fp32 --threads 4 --split test
 ```
 
-The recorded frozen score is **1.7386699302 test BPB**. The matching checkpoint
-SHA-256 is
-`373b884e4daec5c99ad2e0645106ead62580b68c2b07a0eb2220e3c7c1c87dcc`.
-The complete matching submission bundle is
-[`checkpoint/DASE7506_MP1_Li_Zhoutong_checkpoint.zip`](checkpoint/DASE7506_MP1_Li_Zhoutong_checkpoint.zip),
-whose SHA-256 is
-`4bb31e847c0f1bdcccdc905641aaa59dc9e4f6beae27291f0f9f5cf5a7503d07`.
+The current CPU FP32 test score is **1.5895306196 BPB** (42.99 s). The
+matching checkpoint SHA-256 is
+`90163aed08c92f1affce1830907e63a62ef0b01ec32327c82a71088f8c747802`.
+The 21.45 MB checkpoint and required inference code remain below the 64 MiB
+asset limit. The previous frozen 1.7386699302 BPB checkpoint is retained in
+the experiment log for comparison, not as the current submission candidate.
+The matching ZIP bundle is
+[`checkpoint/DASE7506_MP1_Li_Zhoutong_checkpoint.zip`](checkpoint/DASE7506_MP1_Li_Zhoutong_checkpoint.zip)
+with SHA-256 `9FCE3093A75EC863DDEC7D820040045ACEA1C0CF20D68C0393D6A9E65547CAEA`.
 
 Training writes `checkpoint.pt` and `metrics.json`. Evaluation writes `test_cpu_fp32.json` (or the corresponding device/split name) and per-window losses. Submit the **bpb** value from the complete-test JSON, not token perplexity or validation BPB. Default evaluation is FP32. Add `--device cuda` for GPU runs; training can use BF16, but ranked evaluation must use FP32 and remain reproducible on CPU. The supplied CUDA runner caps PyTorch allocation at 20 GB; driver overhead is additional.
 

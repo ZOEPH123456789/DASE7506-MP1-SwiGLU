@@ -90,6 +90,29 @@ Status: complete.
   `student_model.py`, and configuration: 8,917,166 bytes / 8.5041 MiB.
 - Constraint checks: scoring time 1.48x baseline (<5x); RAM 1.5333 GiB
   (<4 GiB); inference assets 8.5041 MiB (<64 MiB); contract tests 5/5 passed.
+
+## 2026-09-28 - capacity-scaled dropout candidate
+
+- Added configurable dropout to the existing SwiGLU block while preserving the
+  causal attention, normalization, tokenizer and evaluator contracts. The new
+  configuration is `configs/swiglu_256x6_dropout.json`: width 256, eight heads,
+  six blocks, hidden width 688 and dropout 0.1 (5,355,584 parameters).
+- Trained for 12,000 updates with seed 17 and batch size 32, processing
+  98,304,000 targets. Training used local CUDA FP32 only as an acceleration
+  device; this does not define the submitted score. GPU training took
+  2,207.836 s and used 1.3148 GB peak allocated memory.
+- Validation history improved from 1.759939 at step 2,000 to 1.567424 at step
+  12,000. The method was frozen before test evaluation.
+- The authoritative full-test command used the original CPU environment:
+  `python evaluate.py --checkpoint runs/swiglu256x6-dropout10-final12000-s17/checkpoint.pt --device cpu --precision fp32 --threads 4 --split test`.
+  It produced **1.589530620 BPB** in 42.991 s, with 428,405 targets and
+  1,292,013 UTF-8 bytes. Checkpoint SHA-256:
+  `90163aed08c92f1affce1830907e63a62ef0b01ec32327c82a71088f8c747802`.
+- The CPU timing is 3.19x the locally reproduced baseline (13.459 s), below
+  the 5x limit. The checkpoint is 21.45 MB; the evaluator reports zero CUDA
+  allocation because this final measurement is CPU-only. The earlier Windows
+  process-tree RAM procedure should be rerun before a formal submission if the
+  course requests an OS-level peak-RAM number for this larger candidate.
 ## 26 September 2026 - report revision and submission hygiene
 
 - Replaced the stale matched-model test placeholder with `Not evaluated

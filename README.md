@@ -80,7 +80,7 @@ blocks, SwiGLU hidden width 688 and dropout 0.1. Training was accelerated on a
 local CUDA GPU, but the ranked result below was re-evaluated in the required
 CPU FP32 mode:
 
-The previous 192-wide run can still be reproduced with the commands recorded
+The previous 192-wide run can still be reproduced from the settings recorded
 in `report/RUN_LOG.csv`; it is retained as an intermediate comparison.
 
 ```bash
@@ -99,6 +99,12 @@ The matching ZIP bundle is
 with SHA-256 `9FCE3093A75EC863DDEC7D820040045ACEA1C0CF20D68C0393D6A9E65547CAEA`.
 
 Training writes `checkpoint.pt` and `metrics.json`. Evaluation writes `test_cpu_fp32.json` (or the corresponding device/split name) and per-window losses. Submit the **bpb** value from the complete-test JSON, not token perplexity or validation BPB. Default evaluation is FP32. Add `--device cuda` for GPU runs; training can use BF16, but ranked evaluation must use FP32 and remain reproducible on CPU. The supplied CUDA runner caps PyTorch allocation at 20 GB; driver overhead is additional.
+
+Machine-readable evidence used by the report is retained in
+[`report/FIGURE_SOURCE.csv`](report/FIGURE_SOURCE.csv) for both plotted curves
+and [`report/FROZEN_SCORE_EVIDENCE.json`](report/FROZEN_SCORE_EVIDENCE.json)
+for the final CPU FP32 score. On Windows, the process-tree RAM measurement can
+be repeated with [`report/measure_peak_ram.ps1`](report/measure_peak_ram.ps1).
 
 ## 3. Files and model interface
 

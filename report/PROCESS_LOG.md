@@ -106,7 +106,7 @@ Status: complete.
 - The 7,200-update no-dropout and dropout runs took 1,931.048 s and 1,619.967 s
   of local CUDA FP32 training respectively. Including the baseline, matched
   SwiGLU, width-192, both 7,200-update controls and the final run, recorded
-  main-run training wall time sums to 10,736.16 s (2.98 h). CPU and GPU times
+  main-run training wall time sums to 10,736.14 s (2.98 h). CPU and GPU times
   are disclosed but are not directly comparable measures of algorithm speed.
 - Trained for 12,000 updates with seed 17 and batch size 32, processing
   98,304,000 targets. Training used local CUDA FP32 only as an acceleration
@@ -139,3 +139,12 @@ Status: complete.
   not mistaken for a manifest of the modified submission.
 - Changed the legacy report builders to write separate `*_legacy_rebuild` files,
   protecting the student-edited and revised reports from accidental overwrite.
+
+## 2026-09-29 - final evidence audit
+
+- Added `FIGURE_SOURCE.csv` with every point used in the two report figures.
+- Added `FROZEN_SCORE_EVIDENCE.json` containing the authoritative CPU FP32 test
+  output and `measure_peak_ram.ps1` for repeating the Windows process-tree RAM
+  measurement.
+- Corrected the repository-relative GUIDE-to-README link and the rounded sum of
+  six main-run training times (10,736.14 s).

@@ -91,8 +91,8 @@ python evaluate.py --checkpoint runs/swiglu256x6-dropout10-final12000-s17/checkp
 The current CPU FP32 test score is **1.5895306196 BPB** (42.99 s). The
 matching checkpoint SHA-256 is
 `90163aed08c92f1affce1830907e63a62ef0b01ec32327c82a71088f8c747802`.
-The 21.45 MB checkpoint and required inference code remain below the 64 MiB
-asset limit. The previous frozen 1.7386699302 BPB checkpoint is retained in
+The checkpoint, student implementation and configuration total **20.46 MiB**,
+below the 64 MiB asset limit. The previous frozen 1.7386699302 BPB checkpoint is retained in
 the experiment log for comparison, not as the current submission candidate.
 The matching ZIP bundle is
 [`checkpoint/DASE7506_MP1_Li_Zhoutong_checkpoint.zip`](checkpoint/DASE7506_MP1_Li_Zhoutong_checkpoint.zip)
@@ -131,9 +131,9 @@ Use validation for all development and checkpoint/mixture selection. Weights, st
 
 Measure all three limits for the same frozen predictor:
 
-- **CPU time ≤5× baseline:**
-- **Peak RAM ≤4 GiB:**
-- **Inference assets ≤64 MiB uncompressed:**
+- **CPU time ≤5× baseline:** 42.99 s / 13.46 s = 3.19× — pass.
+- **Peak RAM ≤4 GiB:** 1.4972 GiB process-tree working set — pass.
+- **Inference assets ≤64 MiB uncompressed:** 20.46 MiB — pass.
 
 ## 5. Prepare your submission and reproduce a peer
 

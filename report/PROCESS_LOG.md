@@ -109,10 +109,10 @@ Status: complete.
   1,292,013 UTF-8 bytes. Checkpoint SHA-256:
   `90163aed08c92f1affce1830907e63a62ef0b01ec32327c82a71088f8c747802`.
 - The CPU timing is 3.19x the locally reproduced baseline (13.459 s), below
-  the 5x limit. The checkpoint is 21.45 MB; the evaluator reports zero CUDA
-  allocation because this final measurement is CPU-only. The earlier Windows
-  process-tree RAM procedure should be rerun before a formal submission if the
-  course requests an OS-level peak-RAM number for this larger candidate.
+  the 5x limit. A repeated CPU scoring pass reproduced the same BPB and measured
+  1.4972 GiB peak process-tree working set. The checkpoint, student module,
+  factory and configuration total 20.46 MiB. The model therefore passes the
+  5x time, 4 GiB RAM and 64 MiB inference-asset limits.
 ## 26 September 2026 - report revision and submission hygiene
 
 - Replaced the stale matched-model test placeholder with `Not evaluated

@@ -139,7 +139,7 @@ Measure all three limits for the same frozen predictor:
 
 The [guide](GUIDE.md) specifies the deadline and website workflow. Include the following in your immutable code repository:
 
-- **Report, at most 10 pages including figures, tables and references** (`report/MP1_Report.pdf`; the editable source is `report/MP1_Report_source.docx`)
+- **Report, at most 10 pages including figures, tables and references** (`report/MP1_Report.pdf`; the current editable source is `report/MP1_Report_source_final.docx`)
 - **Reproduction instructions**
 
 Your final website submission must link to this code and the matching complete checkpoint bundle. The website generates the Issue JSON automatically. Keep all inference assets downloadable for verification.

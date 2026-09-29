@@ -97,6 +97,17 @@ Status: complete.
   causal attention, normalization, tokenizer and evaluator contracts. The new
   configuration is `configs/swiglu_256x6_dropout.json`: width 256, eight heads,
   six blocks, hidden width 688 and dropout 0.1 (5,355,584 parameters).
+- Before the final 12,000-update run, completed a same-capacity dropout
+  ablation at 7,200 updates. The no-dropout configuration reached 1.706230
+  validation BPB at the endpoint and had already worsened from its 1.664660
+  value at update 3,600. The dropout-0.1 configuration reached 1.592719 at
+  update 7,200, a 0.113510 BPB / 6.65% relative endpoint improvement. Neither
+  validation-only checkpoint was evaluated on test.
+- The 7,200-update no-dropout and dropout runs took 1,931.048 s and 1,619.967 s
+  of local CUDA FP32 training respectively. Including the baseline, matched
+  SwiGLU, width-192, both 7,200-update controls and the final run, recorded
+  main-run training wall time sums to 10,736.16 s (2.98 h). CPU and GPU times
+  are disclosed but are not directly comparable measures of algorithm speed.
 - Trained for 12,000 updates with seed 17 and batch size 32, processing
   98,304,000 targets. Training used local CUDA FP32 only as an acceleration
   device; this does not define the submitted score. GPU training took

@@ -1,0 +1,13 @@
+# Benchmark bytes are part of the fixed evaluation protocol. Never translate
+# line endings on checkout, including on Windows with core.autocrlf=true.
+data/tokenizer.json binary
+data/wikitext_train.txt binary
+data/wikitext_validation.txt binary
+data/wikitext_test.txt binary
+
+# Preserve packaged and generated artifacts byte-for-byte.
+*.pt binary
+*.zip binary
+*.npy binary
+*.pdf binary
+*.docx binary
